@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
+import { Route } from "next";
 
 export default function CallToAction() {
   return (
@@ -25,7 +26,7 @@ export default function CallToAction() {
         projects.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 mt-4">
-        <Link href="/docs">
+        <Link href={"/docs" as Route}>
           <Button
             size="lg"
             variant="secondary"
@@ -36,7 +37,6 @@ export default function CallToAction() {
           </Button>
         </Link>
       </div>
-      
     </div>
   );
 }

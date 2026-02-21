@@ -1,4 +1,10 @@
 {
   "root": true,
-  "pages": ["---Get Started---", "index", "hello"]
+  "pages": [
+    "---Get Started---",
+    "index",
+    "crash-courses_",
+    "---Crash Courses---",
+    "...crash-courses"
+  ]
 }

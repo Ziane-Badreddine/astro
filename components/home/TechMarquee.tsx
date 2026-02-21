@@ -21,6 +21,7 @@ import {
   MarqueeItem,
 } from "../kibo-ui/marquee";
 import { Badge } from "../ui/badge";
+import { Route } from "next";
 
 const technologies = [
   {
@@ -94,14 +95,14 @@ const groups = technologies.reduce<{ [key: number]: typeof technologies }>(
     acc[group].push(item);
     return acc;
   },
-  []
+  [],
 );
 
 export const TechMarquee = () => (
   <div className="container mx-auto grid gap-8 py-6">
     <div className="grid gap-4 relative">
       <Badge className=" absolute top-0 -left-5 z-100 -rotate-20" asChild>
-        <Link href="/docs">
+        <Link href={"/docs" as Route}>
           <span>Tutorials</span>
           <ArrowRightIcon size={16} />
         </Link>

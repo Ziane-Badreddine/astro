@@ -1,9 +1,9 @@
-'use client';
-import { type ComponentProps, useState } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import Link, { type LinkProps } from 'fumadocs-core/link';
-import { cn } from '../../../lib/cn';
-import { BaseLinkItem } from '../shared/index';
+"use client";
+import { type ComponentProps, useState } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import Link, { type LinkProps } from "fumadocs-core/link";
+import { cn } from "../../../lib/cn";
+import { BaseLinkItem } from "../shared/index";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,20 +12,20 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
-} from '../../navigation-menu';
-import { useNav } from 'fumadocs-ui/contexts/layout';
+} from "../../navigation-menu";
+import { useNav } from "fumadocs-ui/contexts/layout";
 import type {
   NavigationMenuContentProps,
   NavigationMenuTriggerProps,
-} from '@radix-ui/react-navigation-menu';
-import { buttonVariants } from '../../ui/button';
+} from "@radix-ui/react-navigation-menu";
+import { buttonVariants } from "../../ui/button";
 
 const navItemVariants = cva(
-  'inline-flex items-center gap-1 p-2 text-fd-muted-foreground transition-colors hover:text-fd-accent-foreground data-[active=true]:text-fd-primary [&_svg]:size-4',
+  "inline-flex items-center gap-1 p-2 text-fd-muted-foreground transition-colors  data-[active=true]:text-fd-primary [&_svg]:size-4",
 );
 
-export function Navbar(props: ComponentProps<'div'>) {
-  const [value, setValue] = useState('');
+export function Navbar(props: ComponentProps<"div">) {
+  const [value, setValue] = useState("");
   const { isTransparent } = useNav();
 
   return (
@@ -34,16 +34,13 @@ export function Navbar(props: ComponentProps<'div'>) {
         id="nd-nav"
         {...props}
         className={cn(
-          'fixed top-(--fd-banner-height) z-40 left-0 right-(--removed-body-scroll-bar-size,0) backdrop-blur-lg border-b transition-colors *:mx-auto *:max-w-fd-container',
-          value.length > 0 && 'max-lg:shadow-lg max-lg:rounded-b-2xl',
-          (!isTransparent || value.length > 0) && 'bg-fd-background/80',
+          "fixed top-(--fd-banner-height) py-2.5 z-40 left-0 right-(--removed-body-scroll-bar-size,0) backdrop-blur-lg border-b transition-colors px-4  ",
+          value.length > 0 && "max-lg:shadow-lg max-lg:rounded-b-2xl",
+          (!isTransparent || value.length > 0) && "bg-fd-background/80",
           props.className,
         )}
       >
-        <NavigationMenuList
-          className="flex h-14 w-full items-center px-4"
-          asChild
-        >
+        <NavigationMenuList className="flex  w-full h-10 items-center " asChild>
           <nav>{props.children}</nav>
         </NavigationMenuList>
 
@@ -60,7 +57,7 @@ export function NavbarMenuContent(props: NavigationMenuContentProps) {
     <NavigationMenuContent
       {...props}
       className={cn(
-        'grid grid-cols-1 gap-2 p-4 md:grid-cols-2 lg:grid-cols-3',
+        "grid grid-cols-1 gap-2 p-4 md:grid-cols-2 lg:grid-cols-3",
         props.className,
       )}
     >
@@ -73,7 +70,7 @@ export function NavbarMenuTrigger(props: NavigationMenuTriggerProps) {
   return (
     <NavigationMenuTrigger
       {...props}
-      className={cn(navItemVariants(), 'rounded-md', props.className)}
+      className={cn(navItemVariants(), "rounded-md", props.className)}
     >
       {props.children}
     </NavigationMenuTrigger>
@@ -86,7 +83,7 @@ export function NavbarMenuLink(props: LinkProps) {
       <Link
         {...props}
         className={cn(
-          'flex flex-col gap-2 rounded-lg border bg-fd-card p-3 transition-colors hover:bg-fd-accent/80 hover:text-fd-accent-foreground',
+          "flex flex-col gap-2  rounded-lg border bg-fd-card p-3 transition-colors hover:bg-fd-primary/80 hover:text-fd-primary",
           props.className,
         )}
       >
@@ -96,22 +93,22 @@ export function NavbarMenuLink(props: LinkProps) {
   );
 }
 
-const linkVariants = cva('', {
+const linkVariants = cva("", {
   variants: {
     variant: {
       main: navItemVariants(),
       button: buttonVariants({
-        variant: 'secondary',
-        className: 'gap-1.5 [&_svg]:size-4',
+        variant: "secondary",
+        className: "gap-1.5  [&_svg]:size-4",
       }),
       icon: buttonVariants({
-        variant: 'ghost',
-        size: 'icon',
+        variant: "ghost",
+        size: "icon",
       }),
     },
   },
   defaultVariants: {
-    variant: 'main',
+    variant: "main",
   },
 });
 
@@ -126,7 +123,7 @@ export function NavbarLink({
         <BaseLinkItem
           {...props}
           item={item}
-          className={cn(linkVariants({ variant }), props.className)}
+          className={cn(linkVariants({ variant }), props.className, "mt-0.5")}
         >
           {props.children}
         </BaseLinkItem>

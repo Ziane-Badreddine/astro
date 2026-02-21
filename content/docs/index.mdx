@@ -1,109 +1,100 @@
 ---
 title: Introduction
-description: Master modern programming with practical tutorials, crash courses, and hands-on projects. Learn JavaScript, Python, C++, Java, and popular frameworks.
-icon: BookOpenText
+description: Master modern programming with interactive tutorials, crash courses, and real projects. Learn JavaScript, Python, C++, Java, and explore the latest frameworks, APIs, and AI tooling.
+icon: MdMenuBook  
 ---
 
-import { Callout } from 'fumadocs-ui/components/callout';
-import { Card, Cards } from 'fumadocs-ui/components/card';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { BookOpen, Code2, Zap, Blocks, Newspaper, Wrench } from 'lucide-react';
+import { BookOpen, Code2, Zap, Blocks, Newspaper, Wrench, Bot } from 'lucide-react';
 
-## Introduction
+Welcome to **Astro** — your all-in-one destination for **modern programming education**.  
+We believe the best way to learn is by **building**, which is why every tutorial, crash course, and guide is designed to get you coding from day one.
 
-Welcome to **astro** — your destination for modern programming education. We believe in learning by doing, which is why every tutorial, crash course, and guide is designed to get you coding from day one.
-
-Whether you're taking your first steps in programming or leveling up your existing skills, astro provides **practical, hands-on tutorials** that mirror real-world development. No fluff, no outdated content — just clear, actionable lessons that help you build actual projects.
+Whether you're a complete beginner or an experienced developer refining your skills, **Astro** offers **hands-on tutorials**, **real-world projects**, and **clear explanations** that help you master programming step by step.
 
 <Callout type="info">
-  Jump into coding with practical tutorials and quick crash courses. Learn JavaScript, Python, C++, Java, and the frameworks and APIs that power modern development.
+  Dive into practical tutorials and quick crash courses. Learn JavaScript, Python, C++, Java, and explore the frameworks, APIs, and AI tools shaping today’s development world.
 </Callout>
 
----
 
 ## Features
 
-Discover what makes astro the perfect platform for your learning journey:
+Discover what makes **Astro** the perfect platform for your learning journey:
 
 <Cards>
   <Card
     icon={<BookOpen />}
     title="Programming Tutorials"
-    description="Learn popular languages like JavaScript, Python, C++, and Java through comprehensive step-by-step tutorials with real code examples."
+    description="Learn core languages like JavaScript, Python, C++, and Java through structured, real-world examples and in-depth explanations."
     href="/tutorials"
   />
   <Card
     icon={<Blocks />}
     title="Frameworks & Libraries"
-    description="Master React, Node.js, Django, and other modern frameworks. Build production-ready applications with industry-standard tools."
+    description="Master frameworks such as React, Node.js, and Django. Build production-ready apps using modern libraries and best practices."
     href="/frameworks"
   />
   <Card
     icon={<Code2 />}
     title="APIs & Integrations"
-    description="Learn to work with REST and GraphQL APIs. Connect services, fetch data, and build scalable backend integrations."
+    description="Understand REST and GraphQL APIs. Connect services, fetch data, and design robust backend integrations."
     href="/apis"
   />
   <Card
     icon={<Zap />}
     title="Crash Courses"
-    description="Fast-track your learning with beginner-friendly crash courses. Start building projects in hours, not weeks."
+    description="Learn fast with beginner-friendly crash courses designed to help you build functional projects in hours, not weeks."
     href="/crash-courses"
   />
   <Card
     icon={<Newspaper />}
-    title="Tech Blog"
-    description="Stay current with the latest trends, framework updates, and tools shaping the modern developer ecosystem."
-    href="/blog"
+    title="Tech News & Updates"
+    description="Stay informed with the latest in technology, framework releases, and development tools from across the industry."
+    href="/blogs"
   />
   <Card
     icon={<Wrench />}
     title="Hands-On Learning"
-    description="Build real projects, experiment with code, and practice with guided exercises that reinforce your skills."
+    description="Practice with guided exercises, real-world projects, and challenges that strengthen your understanding through coding."
     href="/projects"
+  />
+  <Card
+    icon={<Bot />}
+    title="AI Tooling & LLMs.txt"
+    description="Explore Astro’s AI integration layer. The platform exposes an LLMs.txt file to help AI models understand and interact with your authentication system."
+    href="https://astro/llms.txt"
   />
 </Cards>
 
----
 
-## Frequently Asked Questions
+## AI tooling
+
+### LLMs.txt
+
+Astro exposes an `LLMs.txt` that helps AI models understand how to integrate and interact with your authentication system. See it at [https://astro.com/llms.txt](https://better-auth.com/llms.txt).
+
+
+## FAQ
+
+Some common questions you might have about **Astro**.
 
 <Accordions>
-  <Accordion title="Who is astro for?">
-    astro is designed for anyone who wants to learn programming — from complete beginners starting their coding journey to experienced developers looking to master new frameworks and technologies. Our content is structured to meet you wherever you are in your learning path.
+  <Accordion id="who-can-use-astro" title="Who can use Astro?">
+    Astro is designed for **learners at all levels** — whether you’re just starting your coding journey or already have experience with software development.  
+    Each tutorial is structured to guide you from core programming principles to advanced concepts, at your own pace.
   </Accordion>
 
-  <Accordion title="Are the tutorials really free?">
-    Yes! All tutorials, crash courses, and learning materials on astro are completely free. We believe quality programming education should be accessible to everyone, with no paywalls or hidden costs.
+  <Accordion id="is-content-free" title="Is all the content on Astro free?">
+    Yes! Every **tutorial**, **crash course**, and **project guide** on Astro is **completely free**.  
+    We believe that **quality programming education** should be accessible to everyone, without subscriptions or hidden fees.
   </Accordion>
 
-  <Accordion title="What programming languages do you cover?">
-    We focus on the most in-demand languages for modern development: **JavaScript**, **Python**, **C++**, and **Java**. We also cover popular frameworks like React, Node.js, Django, and essential tools like REST and GraphQL APIs.
-  </Accordion>
-
-  <Accordion title="How are the tutorials structured?">
-    Each tutorial follows a practical, hands-on approach. You'll start with core concepts, then immediately apply them through code examples and real projects. We prioritize learning by doing over pure theory.
-  </Accordion>
-
-  <Accordion title="What's the difference between tutorials and crash courses?">
-    **Tutorials** are comprehensive, in-depth guides that cover topics thoroughly with detailed explanations. **Crash courses** are condensed, fast-paced lessons designed to get you up and running quickly — perfect for learning the essentials fast.
-  </Accordion>
-
-  <Accordion title="Do I need prior programming experience?">
-    No prior experience is required for our beginner content. We have learning paths for all skill levels — from your very first line of code to advanced architectural patterns used by senior developers.
-  </Accordion>
-
-  <Accordion title="How often is the content updated?">
-    We regularly update our tutorials to reflect the latest versions, best practices, and industry standards. Our tech blog keeps you informed about new releases and changes in the ecosystem.
-  </Accordion>
-
-  <Accordion title="Can I suggest topics or request tutorials?">
-    Absolutely! We love hearing from our community. If there's a topic you'd like us to cover or a tutorial you need, reach out through our contact page or community channels.
+  <Accordion id="how-often-updated" title="How often is content updated?">
+    We regularly update our tutorials and projects to reflect the **latest technologies**, **framework releases**, and **industry best practices**.  
+    You can also explore our **Tech News & Updates** section to stay informed about new features, updates, and trends in modern development.
   </Accordion>
 </Accordions>
 
----
 
 <Callout type="tip">
-  Ready to start learning? Pick any tutorial that interests you and begin building real projects today. The best way to learn programming is by writing code!
+  Ready to start learning? Choose a tutorial that interests you and start building today — because the best way to learn programming is to **write code**.
 </Callout>

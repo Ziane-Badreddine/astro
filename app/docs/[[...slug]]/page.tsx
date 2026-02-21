@@ -1,31 +1,49 @@
-import { getPageImage, source } from '@/lib/source';
+import { getPageImage, source } from "@/lib/source";
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
-} from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/mdx-components';
-import type { Metadata } from 'next';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
+} from "@/components/layout/page";
+import { notFound } from "next/navigation";
+import { getMDXComponents } from "@/mdx-components";
+import type { Metadata } from "next";
+import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
 
-export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
+export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
   const MDX = page.data.body;
+  const avoidLLMHeader = ["Introduction", "Crash Courses"];
 
   return (
-    <DocsPage  toc={page.data.toc} full={page.data.full}>
+    <DocsPage
+      tableOfContent={{
+        style: "clerk",
+      }}
+      toc={page.data.toc}
+      full={page.data.full}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
+      {!avoidLLMHeader.includes(page.data.title) && (
+        <>
+          <DocsDescription>{page.data.description}</DocsDescription>
+          <div className="flex flex-row gap-2 items-center border-b pt-2 pb-6">
+            <LLMCopyButton markdownUrl={`${page.url}.mdx`} />
+            <ViewOptions
+              markdownUrl={`${page.url}.mdx`}
+              githubUrl={`https://github.com/Ziane-Badreddine/astro/blob/dev/apps/docs/content/docs/${page.path}`}
+            />
+          </div>
+        </>
+      )}
       <DocsBody>
         <MDX
           components={getMDXComponents({
             // this allows you to link to other pages with relative file paths
-            a: createRelativeLink(source, page),
+            // a: createRelativeLink(source, page),
           })}
         />
       </DocsBody>
@@ -38,14 +56,14 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  props: PageProps<'/docs/[[...slug]]'>,
+  props: PageProps<"/docs/[[...slug]]">,
 ): Promise<Metadata> {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
   return {
-    title: page.data.title,
+    title: `${page.data.title} | docs`,
     description: page.data.description,
     openGraph: {
       images: getPageImage(page).url,

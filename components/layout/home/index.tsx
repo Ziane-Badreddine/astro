@@ -36,7 +36,7 @@ export interface HomeLayoutProps extends BaseLayoutProps {
 }
 
 export function HomeLayout(
-  props: HomeLayoutProps & HTMLAttributes<HTMLElement>
+  props: HomeLayoutProps & HTMLAttributes<HTMLElement>,
 ) {
   const {
     nav = {},
@@ -82,39 +82,40 @@ export function Header({
 }: HomeLayoutProps) {
   const finalLinks = useMemo(
     () => getLinks(links, githubUrl),
-    [links, githubUrl]
+    [links, githubUrl],
   );
 
   const navItems = finalLinks.filter((item) =>
-    ["nav", "all"].includes(item.on ?? "all")
+    ["nav", "all"].includes(item.on ?? "all"),
   );
   const menuItems = finalLinks.filter((item) =>
-    ["menu", "all"].includes(item.on ?? "all")
+    ["menu", "all"].includes(item.on ?? "all"),
   );
 
   return (
     <Navbar>
       <Link
         href={nav.url ?? "/"}
-        className="inline-flex items-center gap-2.5 font-semibold"
+        className="inline-flex items-center gap-2.5 font-semibol px-0 md:px-3 py-2 hover:bg-primary/10 rounded-xl "
       >
         {nav.title}
       </Link>
       {nav.children}
-      <ul className="flex flex-row items-center gap-2 px-6 max-sm:hidden">
+      <ul className="flex flex-row items-center  px-1 max-md:hidden">
         {navItems
           .filter((item) => !isSecondary(item))
           .map((item, i) => (
-            <NavbarLinkItem key={i} item={item} className="text-sm" />
+            <NavbarLinkItem
+              key={i}
+              item={item}
+              className=" hover:bg-primary/10  px-3 py-2 rounded-xl  "
+            />
           ))}
       </ul>
-      <div className="flex flex-row items-center justify-end gap-1.5 flex-1 max-lg:hidden">
+      <div className="flex flex-row items-center justify-end gap-1.5 flex-1 max-md:hidden">
         {searchToggle.enabled !== false &&
           (searchToggle.components?.lg ?? (
-            <LargeSearchToggle
-              className="w-full  ps-2.5 max-w-[240px]"
-              hideIfDisabled
-            />
+            <LargeSearchToggle className="max-w-[240px]" hideIfDisabled />
           ))}
 
         {navItems.filter(isSecondary).map((item, i) => (
@@ -122,7 +123,7 @@ export function Header({
             <Button
               size={"sm"}
               variant={"outline"}
-              className="flex shadow-none cursor-pointer  flex-row items-center empty:hidden"
+              className="flex shadow-none cursor-pointer hover:text-primary  flex-row items-center empty:hidden"
             >
               {" "}
               <SiGithub />
@@ -137,7 +138,7 @@ export function Header({
           </LanguageToggle>
         ) : null}
       </div>
-      <ul className="flex flex-row items-center ms-auto -me-1.5 lg:hidden">
+      <ul className="flex flex-row items-center ms-auto -me-1.5 md:hidden">
         {searchToggle.enabled !== false &&
           (searchToggle.components?.sm ?? (
             <SearchToggle className="p-2" hideIfDisabled />
@@ -150,19 +151,19 @@ export function Header({
                 size: "icon",
                 variant: "ghost",
                 className: "group",
-              })
+              }),
             )}
             enableHover={nav.enableHoverToOpen}
           >
             <ChevronDown className="!size-5.5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
           </MenuTrigger>
-          <MenuContent className="sm:flex-row sm:items-center sm:justify-end">
+          <MenuContent className="md:flex-row md:items-center md:justify-end px-0">
             {menuItems
               .filter((item) => !isSecondary(item))
               .map((item, i) => (
-                <MenuLinkItem key={i} item={item} className="sm:hidden" />
+                <MenuLinkItem key={i} item={item} className="md:hidden" />
               ))}
-            <div className="-ms-1.5 flex flex-row items-center gap-1.5 max-sm:mt-2">
+            <div className="-ms-1.5 flex flex-row items-center gap-1.5 max-sm:mt-2 md:hidden">
               {menuItems.filter(isSecondary).map((item, i) => (
                 <MenuLinkItem key={i} item={item} className="-me-1.5" />
               ))}

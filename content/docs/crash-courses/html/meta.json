@@ -1,0 +1,6 @@
+{
+  "title": "Html",
+  "icon": "FaHtml5",
+  "pages": ["introduction","elements"],
+  "defaultOpen": true
+}

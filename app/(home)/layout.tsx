@@ -1,14 +1,16 @@
 import { HomeLayout } from "@/components/layout/home"
 import { baseOptions } from "@/lib/layout.shared";
-import { AlbumIcon, BookIcon } from "lucide-react";
+import { AlbumIcon } from "lucide-react";
 import { RiUserCommunityFill } from "react-icons/ri";
+import { SiReadthedocs } from "react-icons/si";
+
 
 export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <HomeLayout
       links={[
         {
-          icon: <BookIcon />,
+          icon: <SiReadthedocs />,
           text: "Docs",
           url: "/docs",
           // secondary items will be displayed differently on navbar
@@ -16,8 +18,8 @@ export default function Layout({ children }: LayoutProps<"/">) {
         },
         {
           icon: <AlbumIcon />,
-          text: "Blog",
-          url: "/blog",
+          text: "Blogs",
+          url: "/blogs",
           // secondary items will be displayed differently on navbar
           secondary: false,
         },

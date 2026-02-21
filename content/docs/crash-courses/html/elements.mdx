@@ -1,0 +1,125 @@
+---
+title: Elements
+description: An HTML element is defined by a start tag, some content, and an end tag.
+---
+
+## What is an HTML Element?
+
+An **HTML element** consists of three parts:
+
+```html
+<tagname>Content goes here</tagname>
+```
+
+| Part | Description | Example |
+|------|-------------|---------|
+| **Start Tag** | Opens the element | `<p>` |
+| **Content** | Text or other elements | `This is a paragraph.` |
+| **End Tag** | Closes the element | `</p>` |
+
+**Example:**
+```html
+<h1>This is a heading</h1>
+<p>This is a paragraph.</p>
+<a href="https://example.com">This is a link</a>
+```
+
+---
+
+## Nested HTML Elements
+
+HTML elements can contain other elements inside them:
+
+```html
+<div>
+    <h2>Welcome</h2>
+    <p>This is a <strong>nested</strong> paragraph.</p>
+</div>
+```
+
+<Callout type="warn" title="Important">
+Always close tags in the correct order (last opened, first closed).
+</Callout>
+
+```html
+<!-- ✅ Correct -->
+<p>This is <strong>bold text</strong> in a paragraph.</p>
+
+<!-- ❌ Incorrect -->
+<p>This is <strong>bold text</p></strong>
+```
+
+---
+
+## Never Skip the End Tag
+
+Always close your tags, even if the browser displays content without them:
+
+```html
+<!-- ❌ Bad Practice -->
+<p>First paragraph
+<p>Second paragraph
+
+<!-- ✅ Good Practice -->
+<p>First paragraph</p>
+<p>Second paragraph</p>
+```
+
+<Callout type="info" title="Why Always Use End Tags?">
+- Prevents display issues
+- Improves code readability
+- Ensures proper validation
+- Avoids nesting errors
+</Callout>
+
+---
+
+## Empty HTML Elements
+
+Some elements have no content and no closing tag:
+
+```html
+<br>                                    <!-- Line break -->
+<hr>                                    <!-- Horizontal rule -->
+<img src="photo.jpg" alt="Description"> <!-- Image -->
+<input type="text" name="username">     <!-- Input field -->
+```
+
+<Callout title="Common Empty Elements">
+`<br>`, `<hr>`, `<img>`, `<input>`, `<link>`, `<meta>`, `<area>`, `<base>`, `<col>`, `<embed>`, `<source>`, `<track>`
+</Callout>
+
+---
+
+## HTML is Not Case Sensitive
+
+HTML tags work in any case, but **lowercase is the standard**:
+
+```html
+<!-- All valid, but use lowercase -->
+<P>Text</P>
+<p>Text</p>
+<P>Text</p>
+```
+
+<Callout type="tip" title="Best Practice">
+Always use lowercase for consistency, professional standards, and better compatibility.
+</Callout>
+
+```html
+<!-- ✅ Recommended -->
+<body>
+    <h1>Title</h1>
+    <p>Content</p>
+</body>
+```
+
+---
+
+## Key Takeaways
+
+- HTML elements = start tag + content + end tag
+- Elements can be nested inside each other
+- Always close your tags
+- Some elements are self-closing (empty)
+- Use lowercase for all tags

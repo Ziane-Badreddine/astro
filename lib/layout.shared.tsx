@@ -1,8 +1,5 @@
 import { Logo } from "@/components/logo";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { AlbumIcon, BookIcon } from "lucide-react";
-import { CgCommunity } from "react-icons/cg";
-import { RiUserCommunityFill } from "react-icons/ri";
 
 /**
  * Shared layout configurations

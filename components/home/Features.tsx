@@ -42,7 +42,7 @@ const features = [
   },
   {
     icon: BookOpen,
-    title: "Tech Blog",
+    title: "Tech Blogs",
     description:
       "Stay up-to-date with the latest trends, updates, and tools shaping the developer ecosystem.",
   },
