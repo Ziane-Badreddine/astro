@@ -1,0 +1,223 @@
+---
+title: "Problem C — Moroccan Carpet Patterns"
+description: "Breakdown and solution for Problem C of Game of Codes 4 at INSEA: determining if a carpet tile sequence is harmonious."
+date: 2026-02-08
+authors: [
+    {
+        name: "Ziane Badreddine",
+        avatar: "https://avatars.githubusercontent.com/u/183768832?v=4"
+    },
+    {
+        name: "Mouad Sadik",
+        avatar: "https://avatars.githubusercontent.com/u/130237852?v=4"
+    },
+    {
+        name: "Khalil Baidouri",
+        avatar: "https://avatars.githubusercontent.com/u/189410376?v=4"
+    }
+]
+image: "/blogs"
+tags: [
+  "competitive-programming",
+  "game-of-codes",
+  "INSEA",
+  "FST-Settat",
+  "algorithms",
+  "problem-solving",
+  "frequency-counting",
+]
+---
+
+import { Check, X } from 'lucide-react'
+
+# Problem C — Moroccan Carpet Patterns
+
+> **Game of Codes 4** · INSEA, Rabat, Morocco · February 08, 2026
+
+This is one of the problems our team **Hmama Miyта** tackled during the contest. It turns out to be an elegant little problem hiding behind a beautiful cultural setting — Jihad, a master carpet weaver from the medina of Fes.
+
+---
+
+## Problem Statement
+
+Jihad creates Moroccan carpets represented as a sequence of $$n$$ colored tiles. A carpet pattern is called **harmonious** if it can be split into exactly **two parts** where both parts contain the **same number of each color tile**.
+
+Given a carpet pattern, determine if it's harmonious.
+
+### Input
+
+- First line: an integer $$n$$ where $$2 \leq n \leq 100$$ and $$n$$ is even — the number of tiles
+- Second line: $$n$$ integers $$a_1, a_2, \ldots, a_n$$ where $$1 \leq a_i \leq 100$$ — the tile colors
+
+### Output
+
+Print `YES` if the pattern is harmonious, `NO` otherwise.
+
+---
+
+## Key Insight
+
+<Callout type="info">
+The problem note gives it away: **a pattern is harmonious if and only if every color appears an even number of times.**
+
+If every color count is even, we can always split each color's tiles equally between the two parts — regardless of tile order.
+</Callout>
+
+This simplifies the problem dramatically. We don't need to think about *how* to partition — only *whether* the counts allow it.
+
+### Why is this equivalent?
+
+Suppose every color $$c$$ appears $$f_c$$ times. For a valid split into two equal parts, each part must contain exactly $$f_c / 2$$ tiles of color $$c$$. This is only an integer when $$f_c$$ is even. Conversely, if all $$f_c$$ are even, such a split is always constructible:
+
+```math
+\text{harmonious} \iff \forall\, c \in \text{colors} : f_c \bmod 2 = 0
+```
+
+---
+
+## Walkthrough of Examples
+
+<Accordions>
+  <Accordion title="Example 1 — [1, 2, 2, 1] → YES">
+
+| Color | Count | Even? |
+|-------|-------|-------|
+| 1     | 2     | <Check />   |
+| 2     | 2     | <Check />   |
+
+All counts are even → **YES**.
+
+One valid split: `[1, 2]` and `[2, 1]` — each half has one tile of color 1 and one of color 2.
+
+  </Accordion>
+
+  <Accordion title="Example 2 — [3, 3, 3, 5, 5, 5] → NO">
+
+| Color | Count | Even? |
+|-------|-------|-------|
+| 3     | 3     | <X />    |
+| 5     | 3     | <X />    |
+
+Color 3 and color 5 each appear 3 times — odd → **NO**.
+
+There's no way to give each half exactly the same number of 3s and 5s.
+
+  </Accordion>
+
+  <Accordion title="Example 3 — [1, 1, 1, 2] → NO">
+
+| Color | Count | Even? |
+|-------|-------|-------|
+| 1     | 3     | <X />    |
+| 2     | 1     | <X />    |
+
+Both counts are odd → **NO**.
+
+  </Accordion>
+</Accordions>
+
+---
+
+## Solution
+
+<Steps>
+  <Step>
+    **Read input** — get $$n$$ and the array of tile colors.
+  </Step>
+  <Step>
+    **Count frequencies** — for each color, count how many times it appears.
+  </Step>
+  <Step>
+    **Check parity** — if any color has an odd frequency, output `NO`. Otherwise output `YES`.
+  </Step>
+</Steps>
+
+### Complexity
+
+- **Time:** $$O(n)$$ — one pass to count, one pass to check
+- **Space:** $$O(C)$$ where $$C = 100$$ is the number of distinct possible colors
+
+### Implementation
+
+<Tabs items={['Python', 'C++']}>
+  <Tab value="Python">
+```python
+from collections import Counter
+
+n = int(input())
+tiles = list(map(int, input().split()))
+
+freq = Counter(tiles)
+
+if all(count % 2 == 0 for count in freq.values()):
+    print("YES")
+else:
+    print("NO")
+```
+  </Tab>
+  <Tab value="C++">
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    map<int, int> freq;
+    for (int i = 0; i < n; i++) {
+        int a;
+        cin >> a;
+        freq[a]++;
+    }
+
+    for (auto& [color, count] : freq) {
+        if (count % 2 != 0) {
+            cout << "NO\n";
+            return 0;
+        }
+    }
+
+    cout << "YES\n";
+    return 0;
+}
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Common Pitfalls
+
+<Callout type="warn">
+**Don't overthink it.** This problem might tempt you to simulate actual splits or use dynamic programming. The note in the problem statement reveals the clean equivalence — always read the notes!
+</Callout>
+
+<Accordions>
+  <Accordion title="Pitfall: Checking total count instead of per-color">
+    Since $$n$$ is guaranteed to be even, the total number of tiles is always even. But that alone doesn't make the pattern harmonious — each *individual* color must have an even count.
+
+    Counter-example: `[1, 1, 1, 2]` has $$n = 4$$ (even), but color 1 appears 3 times and color 2 appears 1 time → **NO**.
+  </Accordion>
+
+  <Accordion title="Pitfall: Worrying about the split position">
+    The split doesn't have to be a contiguous subarray at a fixed index. The problem says "split into two parts" — and the note confirms we only care about *counts*, not *positions*. Any assignment of tiles to two groups works as long as per-color frequencies are satisfied.
+  </Accordion>
+</Accordions>
+
+---
+
+## Reflection
+
+This was a quick solve for us during the contest — a clean, satisfying problem that rewards reading carefully. The cultural framing around Moroccan carpet weaving gave it a lovely flavor that matched the INSEA setting perfectly.
+
+<Callout type="info">
+  Problems like this are a good reminder: **the most elegant solutions often come from reformulating the question**, not from implementing the naive approach.
+</Callout>
+
+---
+
+*Part of our [Game of Codes 4](/blogs/game-of-codes) series — see the main article for the full contest recap.*

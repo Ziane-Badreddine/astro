@@ -2,6 +2,7 @@ import "@/app/global.css";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import "katex/dist/katex.css";
 
 // export const libreCaslonText = Libre_Caslon_Text({
 //   subsets: ["latin"],

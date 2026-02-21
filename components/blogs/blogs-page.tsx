@@ -37,7 +37,7 @@ export default function BlogsPage() {
                     src={post.data.image}
                     alt={post.data.title}
                     fill
-                    className="rounded-md object-cover bg-muted transition-colors"
+                    className="rounded-md object-cover bg-linear-to-br from-primary via-primary/50 to-muted-foreground  transition-colors"
                   />
                 </div>
               )}

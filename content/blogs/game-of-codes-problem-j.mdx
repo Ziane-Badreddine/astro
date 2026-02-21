@@ -1,0 +1,325 @@
+---
+title: "Problem J — Unified Activity Feed"
+description: "Breakdown and solution for Problem J of Game of Codes 4 at INSEA: merging Legacy and Nova ID systems to answer employee activity queries."
+date: 2026-02-08
+authors: [
+    {
+        name: "Ziane Badreddine",
+        avatar: "https://avatars.githubusercontent.com/u/183768832?v=4"
+    },
+    {
+        name: "Mouad Sadik",
+        avatar: "https://avatars.githubusercontent.com/u/130237852?v=4"
+    },
+    {
+        name: "Khalil Baidouri",
+        avatar: "https://avatars.githubusercontent.com/u/189410376?v=4"
+    }
+]
+image: "/blogs/goc.webp"
+tags: [
+  "competitive-programming",
+  "game-of-codes",
+  "INSEA",
+  "FST-Settat",
+  "algorithms",
+  "problem-solving",
+  "hashmaps",
+  "data-structures",
+]
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Problem J — Unified Activity Feed
+
+> **Game of Codes 4** · INSEA, Rabat, Morocco · February 08, 2026
+
+A classic data-wrangling problem: two systems, two ID spaces, one employee behind each. The challenge is wiring them together and answering activity queries efficiently.
+
+---
+
+## Problem Statement
+
+A company has two systems that both reference the same set of employees:
+
+- **Legacy system** — identifies employees by **Legacy IDs**
+- **Nova system** — identifies employees by **Nova IDs**
+
+Activity logs were collected from both systems. Each log entry references exactly one ID (either Legacy or Nova). For each query (an employee ID), output all **distinct** action IDs performed by that employee, in **lexicographical order**, separated by commas. If no actions, output an empty line.
+
+### Input
+
+- Line 1: integers $$L$$ and $$N$$ $$(1 \leq L, N \leq 10^4)$$ — number of Legacy IDs and Nova IDs
+- Next $$L$$ lines: a Legacy ID and an employee ID
+- Next $$N$$ lines: a Nova ID and an employee ID
+- Next line: integer $$K$$ $$(0 \leq K \leq 2 \cdot 10^4)$$ — number of log entries
+- Next $$K$$ lines: a character (`L` or `N`), an ID from the corresponding system, and an action ID
+- Next line: integer $$Q$$ $$(1 \leq Q \leq 10^4)$$ — number of queries
+- Next $$Q$$ lines: an employee ID
+
+### Output
+
+For each query, output all **distinct** action IDs in **lexicographical order**, comma-separated. Output an empty line if the employee has no actions.
+
+---
+
+## Key Insight
+
+<Callout type="info">
+The core challenge is **ID unification**: a Legacy ID and a Nova ID may both point to the same employee. We need to resolve any ID (Legacy or Nova) to its canonical employee ID, then aggregate all actions per employee.
+</Callout>
+
+This is a straightforward **hashmap problem** — no fancy algorithms needed, just careful bookkeeping across two lookup tables.
+
+---
+
+## Approach
+
+<Steps>
+  <Step>
+    **Build two lookup maps** — `legacy_to_emp` mapping each Legacy ID → employee ID, and `nova_to_emp` mapping each Nova ID → employee ID.
+  </Step>
+  <Step>
+    **Process log entries** — for each log entry `(system, id, action)`, resolve the ID to an employee using the appropriate map, then add the action to that employee's action set.
+  </Step>
+  <Step>
+    **Answer queries** — for each queried employee ID, retrieve their action set, sort it lexicographically, and print comma-separated. If no actions, print an empty line.
+  </Step>
+</Steps>
+
+### Why a set for actions?
+
+The problem asks for **distinct** action IDs. Using a set automatically deduplicates — no need for a separate dedup pass.
+
+```math
+\text{output}(emp) = \text{sort}(\{ a \mid (*, \text{id}, a) \in \text{logs},\ \text{resolve}(\text{id}) = emp \})
+```
+
+---
+
+## Walkthrough of the Example
+
+### Setup
+
+**Legacy mappings:**
+
+| Legacy ID  | Employee |
+|------------|----------|
+| `l_alice`  | `emp1`   |
+| `l_bob`    | `emp2`   |
+| `l_charlie`| `emp3`   |
+
+**Nova mappings:**
+
+| Nova ID | Employee |
+|---------|----------|
+| `n_a1`  | `emp1`   |
+| `n_b2`  | `emp2`   |
+| `n_c3`  | `emp3`   |
+
+<Accordions>
+  <Accordion title="Log processing — resolving 6 entries">
+
+| System | ID         | Action   | Resolves to |
+|--------|------------|----------|-------------|
+| L      | `l_alice`  | `login`  | `emp1`      |
+| N      | `n_a1`     | `upload` | `emp1`      |
+| L      | `l_bob`    | `login`  | `emp2`      |
+| N      | `n_a1`     | `login`  | `emp1`      |
+| N      | `n_c3`     | `export` | `emp3`      |
+| L      | `l_charlie`| `view`   | `emp3`      |
+
+After deduplication per employee:
+
+| Employee | Actions (set)          |
+|----------|------------------------|
+| `emp1`   | `login`, `upload`      |
+| `emp2`   | `login`                |
+| `emp3`   | `export`, `view`       |
+| `emp4`   | *(none)*               |
+
+  </Accordion>
+
+  <Accordion title="Query answers">
+
+| Query  | Sorted actions     | Output            |
+|--------|--------------------|-------------------|
+| `emp1` | `login`, `upload`  | `login upload`    |
+| `emp2` | `login`            | `login`           |
+| `emp3` | `export`, `view`   | `export view`     |
+| `emp4` | *(none)*           | *(empty line)*    |
+
+<Callout type="info">
+Note: the expected output shows actions space-separated — check whether the problem means comma or space. The problem statement says "separated by commas" but the sample output uses spaces. **Follow the sample output** (spaces).
+</Callout>
+
+  </Accordion>
+</Accordions>
+
+---
+
+## Implementation
+
+<Tabs items={['Python', 'C++']}>
+  <Tab value="Python">
+```python
+import sys
+from collections import defaultdict
+input = sys.stdin.readline
+
+def main():
+    L, N = map(int, input().split())
+
+    legacy_to_emp = {}
+    for _ in range(L):
+        parts = input().split()
+        legacy_to_emp[parts[0]] = parts[1]
+
+    nova_to_emp = {}
+    for _ in range(N):
+        parts = input().split()
+        nova_to_emp[parts[0]] = parts[1]
+
+    emp_actions = defaultdict(set)
+
+    K = int(input())
+    for _ in range(K):
+        parts = input().split()
+        system, id_, action = parts[0], parts[1], parts[2]
+        if system == 'L':
+            emp = legacy_to_emp.get(id_)
+        else:
+            emp = nova_to_emp.get(id_)
+        if emp:
+            emp_actions[emp].add(action)
+
+    Q = int(input())
+    out = []
+    for _ in range(Q):
+        emp = input().strip()
+        actions = sorted(emp_actions[emp])
+        out.append(' '.join(actions))
+
+    print('\n'.join(out))
+
+main()
+```
+  </Tab>
+  <Tab value="C++">
+```cpp 
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int L, N;
+    cin >> L >> N;
+
+    unordered_map<string, string> legacy_to_emp, nova_to_emp;
+
+    for (int i = 0; i < L; i++) {
+        string lid, emp;
+        cin >> lid >> emp;
+        legacy_to_emp[lid] = emp;
+    }
+
+    for (int i = 0; i < N; i++) {
+        string nid, emp;
+        cin >> nid >> emp;
+        nova_to_emp[nid] = emp;
+    }
+
+    map<string, set<string>> emp_actions;
+
+    int K;
+    cin >> K;
+    while (K--) {
+        char sys;
+        string id, action;
+        cin >> sys >> id >> action;
+
+        string emp;
+        if (sys == 'L') {
+            auto it = legacy_to_emp.find(id);
+            if (it != legacy_to_emp.end()) emp = it->second;
+        } else {
+            auto it = nova_to_emp.find(id);
+            if (it != nova_to_emp.end()) emp = it->second;
+        }
+
+        if (!emp.empty()) emp_actions[emp].insert(action);
+    }
+
+    int Q;
+    cin >> Q;
+    while (Q--) {
+        string emp;
+        cin >> emp;
+        auto it = emp_actions.find(emp);
+        if (it == emp_actions.end() || it->second.empty()) {
+            cout << '\n';
+        } else {
+            bool first = true;
+            for (const auto& a : it->second) {
+                if (!first) cout << ' ';
+                cout << a;
+                first = false;
+            }
+            cout << '\n';
+        }
+    }
+
+    return 0;
+}
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Complexity
+
+- **Time:** $$O((L + N + K + Q) \cdot \log(\text{max(actions)}))$$ — dominated by set insertions and sorting
+- **Space:** $$O(L + N + K)$$ — storing mappings and action sets
+
+<Callout type="warn">
+Use `sys.stdin.readline` in Python (or `ios::sync_with_stdio(false)` in C++) — with $$K, Q$$ up to $$2 \times 10^4$$, naive `input()` can be too slow for the 1-second time limit.
+</Callout>
+
+---
+
+## Common Pitfalls
+
+<Accordions>
+  <Accordion title="Pitfall: Using a list instead of a set for actions">
+    If you append to a list and forget to deduplicate, you'll output repeated actions. Use a `set` from the start — it handles dedup automatically and makes sorting trivial.
+  </Accordion>
+
+  <Accordion title="Pitfall: Querying an employee with no logs">
+    If an employee ID appears in a query but has zero log entries, you must output an **empty line** — not skip it, not output `0`. Handle this explicitly.
+  </Accordion>
+
+  <Accordion title="Pitfall: Assuming one ID per employee">
+    An employee can have **both** a Legacy ID and a Nova ID. Logs can come from either system. The mapping tables handle this — always resolve through the lookup before storing actions.
+  </Accordion>
+</Accordions>
+
+---
+
+## Reflection
+
+Problem J is a good example of a problem that looks complex from the description but reduces to two hashmaps and a sorted set. The key is reading carefully to understand the ID resolution layer — once that's clear, the rest follows naturally.
+
+<Callout type="info">
+In contests, always prototype the data flow on paper first: *what maps to what, and what do I aggregate?* For this problem: **ID → employee → actions**.
+</Callout>
+
+---
+
+*Part of our [Game of Codes 4](/blogs/game-of-codes) series — see the main article for the full contest recap.*

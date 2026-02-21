@@ -1,4 +1,6 @@
 import { remarkMdxMermaid } from "fumadocs-core/mdx-plugins";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 import {
   defineCollections,
   defineConfig,
@@ -26,7 +28,8 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
-    remarkPlugins: [remarkMdxMermaid],
+    remarkPlugins: [remarkMdxMermaid, remarkMath],
+    rehypePlugins: (v) => [rehypeKatex, ...v],
     rehypeCodeOptions: {
       themes: {
         light: "github-light",
@@ -54,7 +57,7 @@ export const blogCollection = defineCollections({
         name: z.string(),
         avatar: z.string(),
         twitter: z.string().optional(),
-      })
+      }),
     ),
     image: z.string(),
     tags: z.array(z.string()),
