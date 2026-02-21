@@ -17,7 +17,7 @@ import { Route } from "next";
 
 const metaTitle = "Blogs | astro";
 const metaDescription = "Latest changes , fixes and updates.";
-const ogImage = "https://better-auth.com/release-og/changelog-og.png";
+const ogImage = "https://astro.com/release-og/changelog-og.png";
 
 export default async function page({
   params,
